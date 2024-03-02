@@ -15,14 +15,14 @@ const Index = () => {
   const [selectedTransport, setSelectedTransport] = useState("bus");
 
   // Placeholder function for map rendering
-  const renderMap = (location) => {
-    // In a real application, this is where you would render a map with a marker at the given location
-    // For this example, it's just a placeholder image
+  const renderMap = (transportData) => {
     return (
       <Box boxSize="lg" bg="gray.200" p={4} borderRadius="md">
-        <Text>
-          Map displaying location: {location.lat}, {location.lng}
-        </Text>
+        {Object.entries(transportData).map(([key, location]) => (
+          <Text key={key}>
+            {key.charAt(0).toUpperCase() + key.slice(1)} location: {location.lat}, {location.lng}
+          </Text>
+        ))}
         <Image src="https://images.unsplash.com/photo-1596025015373-fc39b4d4de2a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1MDcxMzJ8MHwxfHNlYXJjaHwxfHxtYXAlMjBwbGFjZWhvbGRlcnxlbnwwfHx8fDE3MDkzMzgyODh8MA&ixlib=rb-4.0.3&q=80&w=1080" alt="Map placeholder" />
       </Box>
     );
@@ -31,24 +31,7 @@ const Index = () => {
   return (
     <VStack spacing={8} p={8}>
       <Heading>Transportation Locator</Heading>
-      <Flex wrap="wrap" justify="center" gap={4}>
-        <Button leftIcon={<FaBus />} onClick={() => setSelectedTransport("bus")}>
-          Bus
-        </Button>
-        <Button leftIcon={<FaPlane />} onClick={() => setSelectedTransport("plane")}>
-          Plane
-        </Button>
-        <Button leftIcon={<FaTrain />} onClick={() => setSelectedTransport("train")}>
-          Train
-        </Button>
-        <Button leftIcon={<FaTaxi />} onClick={() => setSelectedTransport("taxi")}>
-          Taxi
-        </Button>
-        <Button leftIcon={<FaCar />} onClick={() => setSelectedTransport("car")}>
-          Car
-        </Button>
-      </Flex>
-      {renderMap(transportationData[selectedTransport])}
+      {renderMap(transportationData)}
     </VStack>
   );
 };
